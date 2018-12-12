@@ -75,6 +75,7 @@ private:
 	// Image
 	cv::Size img_size;
 	cv::Mat img_gray;
+	cv::Mat img_src;
 	int img_height;
 	int img_width;
 	int img_roi_height;

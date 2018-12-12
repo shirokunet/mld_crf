@@ -1,33 +1,43 @@
 #include <iostream>
 #include <string>
-#include <opencv2\opencv.hpp>
+#include <opencv2/opencv.hpp>
 
 #include "LaneDetection.h"
 
-void main(){
+#include <sstream>
+
+template <typename T>
+std::string ToString(T val)
+{
+    std::stringstream stream;
+    stream << val;
+    return stream.str();
+}
+
+int main(){
 	
 	// input parameter
 	bool verbose_lm_detction = false;
 	bool verbose_seed_gen = false;
-	bool verbose_run_crf = false;
+	bool verbose_run_crf = true;
 	bool verbose_validating = true;
 	bool verbose = verbose_lm_detction | verbose_seed_gen | verbose_run_crf | verbose_validating;
 
 	//<-------------- Common Variables definition & initialization --------------> 
-	std::string img_path = "..\\data\\20120322142840\\";
+	std::string img_path = "../data/20180910_124456_input_freeway/";
 
 	LaneDetection ld = LaneDetection();
-	std::string img_name = (std::string(img_path)).append(std::to_string(1)).append(".jpg");
+	std::string img_name = (std::string(img_path)).append(ToString(1)).append(".jpg");
 	
 	// initilaize
 	if (!ld.initialize_variable(img_name)) {
-		return;
+		return 0;
 	}
 	
 	// process
-	for(int ff=1;ff<30;ff++){
+	for(int ff=1;ff<20;ff++){
 
-		std::string img_name = (std::string(img_path)).append(std::to_string(ff)).append(".jpg");
+		std::string img_name = (std::string(img_path)).append(ToString(ff)).append(".jpg");
 
 		// Initlaization
 		if (!ld.initialize_Img(img_name)) {
@@ -53,5 +63,5 @@ void main(){
 	}
 
 	ld.~LaneDetection();
-	
+    return 0;	
 }

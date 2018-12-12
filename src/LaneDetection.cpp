@@ -1,5 +1,5 @@
 #pragma warning(disable: 4819)
-#include <opencv2\opencv.hpp>
+#include <opencv2/opencv.hpp>
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
@@ -70,7 +70,8 @@ bool LaneDetection::initialize_variable(std::string& img_name) {
 bool LaneDetection::initialize_Img(std::string& img_name) {
 
 	// Loading an input image
-	cv::Mat img_src = cv::imread(img_name);
+	// cv::Mat img_src = cv::imread(img_name);
+	img_src = cv::imread(img_name);
 	if (img_src.empty()) {
 		std::cout << "Err: Cannot find the input image: " << img_name << std::endl;
 		return false;
@@ -937,7 +938,8 @@ void LaneDetection::graph_generation(bool verbose) {
 
 	// Test displaying
 	if (verbose) {
-		cv::Mat img_test_crf = cv::Mat(img_size, CV_8UC3);
+		// cv::Mat img_test_crf = cv::Mat(img_size, CV_8UC3);
+		cv::Mat img_test_crf = img_src;
 		for (int ii = 0; ii < marking_seed.size(); ++ii) {
 			if (marking_seed[ii].flag < 0) {
 				continue;
