@@ -17,17 +17,17 @@ std::string ToString(T val)
 int main(){
 	
 	// input parameter
-	bool verbose_lm_detction = false;
-	bool verbose_seed_gen = false;
-	bool verbose_run_crf = true;
-	bool verbose_validating = true;
+    bool verbose_lm_detction = true;
+    bool verbose_seed_gen = false;
+    bool verbose_run_crf = true;
+    bool verbose_validating = false;
 	bool verbose = verbose_lm_detction | verbose_seed_gen | verbose_run_crf | verbose_validating;
 
 	//<-------------- Common Variables definition & initialization --------------> 
-	std::string img_path = "../data/20180910_124456_input_freeway/";
+    std::string img_path = "../data/20180910_135722_input_freeway/";
 
 	LaneDetection ld = LaneDetection();
-	std::string img_name = (std::string(img_path)).append(ToString(1)).append(".jpg");
+    std::string img_name = (std::string(img_path)).append(ToString(1)).append(".png");
 	
 	// initilaize
 	if (!ld.initialize_variable(img_name)) {
@@ -37,7 +37,7 @@ int main(){
 	// process
 	for(int ff=1;ff<20;ff++){
 
-		std::string img_name = (std::string(img_path)).append(ToString(ff)).append(".jpg");
+        img_name = (std::string(img_path)).append(ToString(ff)).append(".png");
 
 		// Initlaization
 		if (!ld.initialize_Img(img_name)) {
@@ -58,7 +58,7 @@ int main(){
 	
 
 		if (verbose) {
-			cv::waitKey(0);
+            cv::waitKey(5000);
 		}
 	}
 

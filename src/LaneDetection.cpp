@@ -3,13 +3,16 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <string>
+#include <stdio.h>
+#include <iostream>
 
 #include "LaneDetection.h"
 
 
 // Lane marking definition 
 #define MAX_LANE_MARKING 2000
-#define MAX_LW_N 40		// Max lane width, nearest
+#define MAX_LW_N 60		// Max lane width, nearest
 #define MAX_LW_F 8		// Max lane width, farest
 #define MAX_LW_D 10		// Max lane width, delta
 #define MIN_LW_N 20 		// Min lane width, nearest
@@ -44,7 +47,7 @@ bool LaneDetection::initialize_variable(std::string& img_name) {
 	img_size = img_src.size();
 	img_height = img_src.rows;
 	img_width = img_src.cols;
-	img_roi_height = (int)(img_size.height*0.5);
+    img_roi_height = (int)(img_size.height*0.45);
 	img_depth = img_src.depth();
 
 	max_lw.resize(img_height);
@@ -55,12 +58,15 @@ bool LaneDetection::initialize_variable(std::string& img_name) {
 	for (int hh = img_roi_height; hh < img_height; ++hh) {
 		max_lw[hh] = (int)((MAX_LW_N - MAX_LW_F)*(hh - img_roi_height) / (img_size.height - img_roi_height) + MAX_LW_F);
 		min_lw[hh] = (int)((MIN_LW_N - MIN_LW_F)*(hh - img_roi_height) / (img_size.height - img_roi_height) + MIN_LW_F);
+//        std::cout << std::to_string(hh) + ", " + std::to_string(max_lw[hh]) + ", " + std::to_string(min_lw[hh]) << std::endl;
+
 	}
 
 	int w = img_width - 1;
 	while (img_width - 1 - w < w) {
 		max_lw_d[w] = (int)(MAX_LW_D*(abs(w - (img_width - 1) / 2.0)) / ((img_width - 1) / 2.0));
 		max_lw_d[img_width - 1 - w] = (int)(MAX_LW_D*(abs(w - (img_width - 1) / 2.0)) / ((img_width - 1) / 2.0));
+//        std::cout << std::to_string(w) + ", " + std::to_string(max_lw_d[w]) << std::endl;
 		w--;
 	}
 
@@ -70,8 +76,8 @@ bool LaneDetection::initialize_variable(std::string& img_name) {
 bool LaneDetection::initialize_Img(std::string& img_name) {
 
 	// Loading an input image
-	// cv::Mat img_src = cv::imread(img_name);
-	img_src = cv::imread(img_name);
+     cv::Mat img_src = cv::imread(img_name);
+//	img_src = cv::imread(img_name);
 	if (img_src.empty()) {
 		std::cout << "Err: Cannot find the input image: " << img_name << std::endl;
 		return false;
@@ -82,7 +88,7 @@ bool LaneDetection::initialize_Img(std::string& img_name) {
 		img_src.copyTo(img_gray);
 	}
 	else {
-		cv::cvtColor(img_src, img_gray, CV_BGR2GRAY);
+        cv::cvtColor(img_src, img_gray, CV_BGR2GRAY);
 	}
 
 	// Variable initialization 
@@ -99,7 +105,8 @@ void LaneDetection::lane_marking_detection(bool verbose) {
 	for (int h = img_roi_height; h < img_height;) {
 
 		// half size of the filter
-		int hf_size = 2 + 8 * (h - img_roi_height + 1) / (img_height - img_roi_height);
+        int hf_size = 2 + 8 * (h - img_roi_height + 1) / (img_height - img_roi_height);
+//        std::cout << std::to_string(h) + ", " + std::to_string(hf_size) << std::endl;
 
 		std::vector<int> scan_line(img_width);
 
@@ -116,8 +123,11 @@ void LaneDetection::lane_marking_detection(bool verbose) {
 			for (int i = 1; i <= hf_size; i++) {
 				r_val = r_val + img_gray.at<uchar>(h, w + i);
 			}
-			if (((float)(r_val - l_val) / (float)hf_size)>marking_thres((float)l_val / (float)hf_size)) scan_line[w] = 1; // left edge = 1;
-			if (((float)(l_val - r_val) / (float)hf_size)>marking_thres((float)r_val / (float)hf_size)) scan_line[w] = -1; // right edge = -1;
+
+            if (((float)(r_val - l_val) / (float)hf_size)>marking_thres((float)l_val / (float)hf_size))
+                scan_line[w] = 1; // left edge = 1;
+            if (((float)(l_val - r_val) / (float)hf_size)>marking_thres((float)r_val / (float)hf_size))
+                scan_line[w] = -1; // right edge = -1;
 		}
 
 		// Edge Centering
@@ -171,7 +181,8 @@ void LaneDetection::lane_marking_detection(bool verbose) {
 				}
 			}
 			if (m_flag == 2) {
-				if (((r_pt.x - l_pt.x) >= min_lw[h]) && ((r_pt.x - l_pt.x) <= (max_lw[h] + max_lw_d[w]))) {
+                if (((r_pt.x - l_pt.x) >= min_lw[h]) && ((r_pt.x - l_pt.x) <= (max_lw[h] + max_lw_d[w]))) {
+//                if ((r_pt.x - l_pt.x) >= min_lw[h]) {
 
 					// lane update
 					LANE_MARKING lm_new;
@@ -938,8 +949,8 @@ void LaneDetection::graph_generation(bool verbose) {
 
 	// Test displaying
 	if (verbose) {
-		// cv::Mat img_test_crf = cv::Mat(img_size, CV_8UC3);
-		cv::Mat img_test_crf = img_src;
+         cv::Mat img_test_crf = cv::Mat(img_size, CV_8UC3);
+//		cv::Mat img_test_crf = img_src;
 		for (int ii = 0; ii < marking_seed.size(); ++ii) {
 			if (marking_seed[ii].flag < 0) {
 				continue;
@@ -1013,7 +1024,7 @@ void LaneDetection::validating_final_seeds(bool verbose) {
 			cv::circle(img_test_val, dot_p, 1, cv::Scalar(0, 255, 0), 1, 8, 0);
 		}
 
-		cv::imshow("final", img_test_val);
+//		cv::imshow("final", img_test_val);
 	}
 	
 
@@ -1023,16 +1034,17 @@ void LaneDetection::validating_final_seeds(bool verbose) {
 
 float LaneDetection::marking_thres(float input) {
 
-	float thres = 0;
+//	float thres = 0;
+//    if(input<50){
+//        thres = (int)(input/10);
+//    }else{
+//        thres = (int)(15+input/200*10);
+//    }
+//    std::cout << std::to_string(input) + ", " + std::to_string(thres) << std::endl;
+//    return thres;
 
-	/*if(input<50){
-	thres = (int)(input/10);
-	}else{
-	thres = (int)(15+input/200*10);
-	}*/
-	//return thres;
-
-	return input / 10 + 4;
+    return input / 10 + 4;
+//    return 2;
 }
 int LaneDetection::dist_ftn1(int s_i, int s_j, double slope) {
 

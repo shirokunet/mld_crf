@@ -1,4 +1,4 @@
-# Install script for directory: /home/r17u/github_playground/mld_crf
+# Install script for directory: /home/nvidia/github_playgorund/mld_crf
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/r17u/github_playground/mld_crf/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/nvidia/github_playgorund/mld_crf/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/r17u/github_playground/mld_crf/src/LaneDetection.cpp
+/home/nvidia/github_playgorund/mld_crf/src/LaneDetection.cpp
 opencv2/opencv.hpp
 -
 stdlib.h
@@ -16,11 +16,11 @@ time.h
 math.h
 -
 LaneDetection.h
-/home/r17u/github_playground/mld_crf/src/LaneDetection.h
+/home/nvidia/github_playgorund/mld_crf/src/LaneDetection.h
 
-/home/r17u/github_playground/mld_crf/src/LaneDetection.h
+/home/nvidia/github_playgorund/mld_crf/src/LaneDetection.h
 
-/home/r17u/github_playground/mld_crf/src/main.cpp
+/home/nvidia/github_playgorund/mld_crf/src/main.cpp
 iostream
 -
 string
@@ -28,7 +28,7 @@ string
 opencv2/opencv.hpp
 -
 LaneDetection.h
-/home/r17u/github_playground/mld_crf/src/LaneDetection.h
+/home/nvidia/github_playgorund/mld_crf/src/LaneDetection.h
 sstream
 -
 
@@ -381,6 +381,60 @@ opencv2/core/cvdef.h
 /usr/local/include/opencv2/core/opencv2/core/cvdef.h
 assert.h
 -
+
+/usr/local/include/opencv2/cudaarithm.hpp
+opencv2/core/cuda.hpp
+/usr/local/include/opencv2/opencv2/core/cuda.hpp
+
+/usr/local/include/opencv2/cudabgsegm.hpp
+opencv2/core/cuda.hpp
+/usr/local/include/opencv2/opencv2/core/cuda.hpp
+opencv2/video/background_segm.hpp
+/usr/local/include/opencv2/opencv2/video/background_segm.hpp
+
+/usr/local/include/opencv2/cudacodec.hpp
+opencv2/core/cuda.hpp
+/usr/local/include/opencv2/opencv2/core/cuda.hpp
+
+/usr/local/include/opencv2/cudafeatures2d.hpp
+opencv2/core/cuda.hpp
+/usr/local/include/opencv2/opencv2/core/cuda.hpp
+opencv2/features2d.hpp
+/usr/local/include/opencv2/opencv2/features2d.hpp
+opencv2/cudafilters.hpp
+/usr/local/include/opencv2/opencv2/cudafilters.hpp
+
+/usr/local/include/opencv2/cudafilters.hpp
+opencv2/core/cuda.hpp
+/usr/local/include/opencv2/opencv2/core/cuda.hpp
+opencv2/imgproc.hpp
+/usr/local/include/opencv2/opencv2/imgproc.hpp
+
+/usr/local/include/opencv2/cudaimgproc.hpp
+opencv2/core/cuda.hpp
+/usr/local/include/opencv2/opencv2/core/cuda.hpp
+opencv2/imgproc.hpp
+/usr/local/include/opencv2/opencv2/imgproc.hpp
+
+/usr/local/include/opencv2/cudaobjdetect.hpp
+opencv2/core/cuda.hpp
+/usr/local/include/opencv2/opencv2/core/cuda.hpp
+
+/usr/local/include/opencv2/cudaoptflow.hpp
+opencv2/core/cuda.hpp
+/usr/local/include/opencv2/opencv2/core/cuda.hpp
+
+/usr/local/include/opencv2/cudastereo.hpp
+opencv2/core/cuda.hpp
+/usr/local/include/opencv2/opencv2/core/cuda.hpp
+opencv2/calib3d.hpp
+/usr/local/include/opencv2/opencv2/calib3d.hpp
+
+/usr/local/include/opencv2/cudawarping.hpp
+opencv2/core/cuda.hpp
+/usr/local/include/opencv2/opencv2/core/cuda.hpp
+opencv2/imgproc.hpp
+/usr/local/include/opencv2/opencv2/imgproc.hpp
 
 /usr/local/include/opencv2/dnn.hpp
 opencv2/dnn/dnn.hpp
