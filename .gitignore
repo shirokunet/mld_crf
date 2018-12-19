@@ -1,4 +1,4 @@
 src/mld_crf.zip
-build/
+build*/
 build-mld_crf-JetsonTX2-Release/
 build-mld_crf-JetsonTX2-Debug/
